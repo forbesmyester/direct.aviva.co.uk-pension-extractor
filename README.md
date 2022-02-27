@@ -4,7 +4,7 @@ My pensions provider Aviva has a pretty, but inaccessible user interface and doe
 
 Suspect you could get it out by manually re-entering it all or doing a GDPR request.
 
-However if you want your Pensions data the following (crude) JS will give you it as a JSON array. Many tools should be able to process this
+However if you want your Pensions data the following (crude) JS will give you it as a TSV.
 
 You'll need to open up the console (F12) and paste it in to run this.
 
@@ -38,4 +38,40 @@ while (r["Payment type"].length) {
     dataExport.push(zip(rowKeys, rowVals));
 }
 console.log(JSON.stringify(dataExport));
+
+
+function exportToCSV(rows, filename) {
+
+    var header = Object.getOwnPropertyNames(rows.shift());
+    var csv = [header.join("\t")];
+    console.log("HEADER: ", header);
+
+    while (rows.length) {
+        let row = rows.shift();
+        let csvRow = [];
+        for(var i=0; i<header.length; i++){
+            csvRow.push(
+                row.hasOwnProperty(header[i]) ? row[header[i]] : ""
+            )
+        }
+        csv.push(csvRow.join("\t"));
+    }
+
+    downloadCSV(csv.join("\n"), filename);
+}
+
+function downloadCSV(csv, filename) {
+    var csvFile;
+	var downloadLink;
+	csvFile = new Blob([csv], {type:"text/csv"});
+	downloadLink = document.createElement("a");
+	downloadLink.download = filename;
+	downloadLink.href = window.URL.createObjectURL(csvFile);
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+	downloadLink.click();
+}
+
+
+exportToCSV(dataExport, 'x.tsv');
 ```
