@@ -42,7 +42,7 @@ console.log(JSON.stringify(dataExport));
 
 function exportToCSV(rows, filename) {
 
-    var header = Object.getOwnPropertyNames(rows.shift());
+    var header = Object.getOwnPropertyNames(rows[0]);
     var csv = [header.join("\t")];
     console.log("HEADER: ", header);
 
