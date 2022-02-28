@@ -6,7 +6,7 @@ Suspect you could get it out by manually re-entering it all or doing a GDPR requ
 
 However if you want your Pensions data the following (crude) JS will give you it as a TSV.
 
-You'll need to open up the console (F12) and paste it in to run this.
+You'll need to go to  Pension > Details > Transaction History > Full History > All then open up the console (F12) and paste it in to run this.
 
 ```javascript
 let dates = Array.from(document.querySelectorAll('.paymentDetails div > h3')).map(x => x.innerText);
